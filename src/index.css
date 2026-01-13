@@ -1,0 +1,744 @@
+/* ===== ULTIMA 9.0 — Dark Glass UI ===== */
+
+/* Variables */
+:root {
+  --bg-dark: #0a0e1a;
+  --bg-dark-2: #0f1325;
+  --text: #e7e9f5;
+  --muted: #9aa3b2;
+
+  --brand: #6c5ce7; /* индиго-фиолет */
+  --brand-2: #a78bfa; /* светлый фиолет / градиент */
+  --accent: #5b44ff;
+
+  --glass: rgba(20, 24, 40, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow-strong: 0 30px 60px rgba(0, 0, 0, 0.45);
+
+  --container: 1200px;
+  --footer-h: 96px;
+}
+/* ===== THEMES: DARK / LIGHT via [data-theme] ===== */
+
+/* DARK (как у тебя сейчас) — алиасы для совместимости со старыми переменными */
+[data-theme="dark"] {
+  --text-main: #e7e9f5;
+  --text-muted: #9aa3b2;
+
+  --brand: #6c5ce7;
+  --brand-2: #a78bfa;
+  --accent: #5b44ff;
+
+  --glass: rgba(20, 24, 40, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --chip-bg: rgba(255, 255, 255, 0.04);
+  --footer-bg: rgba(10, 14, 26, 0.85);
+
+  /* алиасы под существующие переменные в файле */
+  --text: var(--text-main);
+  --muted: var(--text-muted);
+}
+/* фон и базовые цвета для ТЁМНОЙ */
+[data-theme="dark"] body {
+  color: var(--text-main);
+  background: radial-gradient(
+      900px 400px at 10% -10%,
+      rgba(108, 92, 231, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 400px at 90% -10%,
+      rgba(167, 139, 250, 0.18),
+      transparent 60%
+    ),
+    url("/bg-dark-planet.png") left -10% top -10% / 700px auto no-repeat,
+    url("/bg-half-planet.png") right -5% top -8% / 800px auto no-repeat,
+    linear-gradient(180deg, #0a0e1a 0%, #0f1325 100%);
+}
+
+/* LIGHT (как в твоём примере) */
+[data-theme="light"] {
+  --text-main: #0b0d18;
+  --text-muted: #495266;
+
+  --brand: #4f46e5;
+  --brand-2: #22d3ee;
+  --accent: #4338ca;
+
+  --glass: rgba(255, 255, 255, 0.66);
+  --glass-border: rgba(10, 10, 20, 0.08);
+
+  --card-bg: #ffffff;
+  --chip-bg: #eef2ff;
+  --footer-bg: rgba(255, 255, 255, 0.9);
+
+  /* алиасы под существующие переменные в файле */
+  --text: var(--text-main);
+  --muted: var(--text-muted);
+}
+/* фон и базовые цвета для СВЕТЛОЙ */
+[data-theme="light"] body {
+  color: var(--text-main);
+  background: radial-gradient(
+      1200px 600px at -10% -10%,
+      #eef2ff 0%,
+      rgba(238, 242, 255, 0) 60%
+    ),
+    radial-gradient(
+      1200px 600px at 110% -10%,
+      #e0fbff 0%,
+      rgba(224, 251, 255, 0) 60%
+    ),
+    #f7f8fc;
+}
+
+/* элементы, завязанные на переменные — ничего не ломаем, переиспользуем существующие селекторы */
+.board {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+}
+.info-card {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+}
+.exclusive {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+}
+.chip {
+  background: var(--chip-bg);
+  border: 1px solid var(--glass-border);
+}
+.footer {
+  background: var(--footer-bg);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* светлая таблица отлично смотрится в обеих темах, текст подстроим */
+[data-theme="light"] .u-price-table {
+  color: #0b0d18;
+}
+[data-theme="light"] .u-td-muted {
+  color: #6b7280;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Cosmic background with your public images */
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  color: var(--text);
+  background: radial-gradient(
+      900px 400px at 10% -10%,
+      rgba(108, 92, 231, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 400px at 90% -10%,
+      rgba(167, 139, 250, 0.18),
+      transparent 60%
+    ),
+    url("/bg-dark-planet.png") left -10% top -10% / 700px auto no-repeat,
+    url("/bg-half-planet.png") right -5% top -8% / 800px auto no-repeat,
+    linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark-2) 100%);
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 24px;
+}
+.page {
+  min-height: 100%;
+  padding-bottom: var(--footer-h);
+  position: relative;
+}
+.page--dark .container {
+  padding-top: 24px;
+}
+
+/* ===== Glass board (main wrapper) ===== */
+.board {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  border-radius: 24px;
+  box-shadow: var(--shadow-strong);
+  padding: 24px 24px 32px;
+}
+.board__content {
+  margin-top: 16px;
+}
+
+/* ===== Hero ===== */
+.hero {
+  padding: 8px 8px 16px;
+}
+.hero__topline {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+.badge--outline {
+  border: 1px dashed var(--brand-2);
+  color: var(--brand-2);
+}
+.badge--grad {
+  color: #0b0d18;
+  background: linear-gradient(90deg, #a78bfa, #6ee7f9);
+  font-weight: 700;
+}
+.hero__title {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.hero__subtitle {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ===== Tabs as gradient chips ===== */
+.tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.chip {
+  appearance: none;
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.06s ease, box-shadow 0.12s ease,
+    border-color 0.2s ease;
+}
+.chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+.chip--active {
+  color: #0b0d18;
+  background: linear-gradient(90deg, var(--brand-2), var(--brand));
+  border-color: transparent;
+  box-shadow: 0 12px 30px rgba(108, 92, 231, 0.35);
+}
+.chip__icon {
+  width: 1em;
+  text-align: center;
+  margin-right: 4px;
+}
+
+/* ===== Card inside board ===== */
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  padding: 20px;
+}
+.card__title {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 800;
+}
+.card__short {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+.block {
+  margin: 18px 0;
+}
+.block__title {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.block + .block {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+}
+.list {
+  margin: 0;
+  padding: 0 0 0 18px;
+  display: grid;
+  gap: 6px;
+}
+.list__item {
+  line-height: 1.55;
+}
+
+/* ===== Light Price Table (accent) ===== */
+.u-price-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* строгая сетка 50/25/25 */
+  background: #fff;
+  color: #0b0d18;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.2);
+}
+.u-price-table colgroup col:nth-child(1) {
+  width: 50%;
+}
+.u-price-table colgroup col:nth-child(2) {
+  width: 25%;
+}
+.u-price-table colgroup col:nth-child(3) {
+  width: 25%;
+}
+.u-price-table thead th {
+  text-align: left;
+  background: #f3f4f6;
+  font-weight: 800;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.u-price-table tbody td {
+  padding: 14px 16px;
+  border-top: 1px solid #e5e7eb;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.u-price-table tbody tr:nth-child(2n) td {
+  background: #fbfbfd;
+}
+.u-td-right {
+  text-align: right;
+}
+.u-td-price {
+  color: var(--accent);
+  font-weight: 800;
+}
+.u-td-muted {
+  color: #6b7280;
+}
+.price-table__hint {
+  margin-top: 10px;
+  color: #6b7280;
+}
+
+/* ===== Choose-format block ===== */
+.choose {
+  margin: 28px 0 64px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.choose__title {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+.choose__table {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.choose__header,
+.choose__row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  padding: 12px 14px;
+  align-items: start;
+}
+.choose__header {
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 700;
+}
+.choose__row {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ===== Footer on dark ===== */
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--footer-h);
+  background: rgba(10, 14, 26, 0.85);
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(8px);
+}
+.footer__inner {
+  display: flex;
+  align-items: center;
+}
+.footer__note {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ===== Small screens ===== */
+@media (max-width: 640px) {
+  .container {
+    padding: 16px;
+  }
+  .hero__title {
+    font-size: 24px;
+  }
+  .choose__header,
+  .choose__row {
+    grid-template-columns: 1fr;
+  }
+}
+/* ===== Жёсткое выравнивание колонки "Цена" ===== */
+.u-price-table th,
+.u-price-table td {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* последний столбец: общий правый край и табличные цифры */
+.u-price-table .u-col-price,
+.u-price-table td.u-col-price {
+  text-align: right !important;
+  padding-right: 16px; /* один и тот же отступ для заголовка и значений */
+  font-variant-numeric: tabular-nums; /* одинаковая ширина цифр */
+  -moz-font-feature-settings: "tnum";
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
+  white-space: nowrap; /* не переносим цену */
+}
+
+/* на всякий случай — всегда 3 фикс-колонки */
+.u-price-table {
+  table-layout: fixed;
+}
+.u-price-table colgroup col:nth-child(1) {
+  width: 50%;
+}
+.u-price-table colgroup col:nth-child(2) {
+  width: 25%;
+}
+.u-price-table colgroup col:nth-child(3) {
+  width: 25%;
+}
+
+/* числа выглядят ровно, даже с жирным */
+.u-td-price {
+  font-weight: 800;
+  color: var(--accent, #5b44ff);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+.u-price-table .u-col-price,
+.u-price-table td.u-col-price {
+  text-align: right !important;
+  padding-right: 16px;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+/* ==== FIX: text flow, grid and accordion (put at the very end) ==== */
+
+/* Карточки "Формат работы" — сетка по 2 в ряд */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 840px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.info-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+}
+.info-card__icon {
+  flex: 0 0 auto;
+  opacity: 0.7;
+}
+.info-card__body {
+  min-width: 0;
+}
+.info-card__title {
+  margin: 0 0 4px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.info-card__text {
+  margin: 0;
+  white-space: normal;
+  line-height: 1.6;
+}
+
+/* Блоки внутри FormatCard — предсказуемые отступы */
+.block {
+  margin: 20px 0;
+}
+.block + .block {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+}
+
+/* Аккордеон — без наложений на следующие секции */
+.accordion {
+  display: block;
+}
+.acc {
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.acc + .acc {
+  margin-top: 12px;
+}
+.acc__head {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.acc__body {
+  overflow: hidden; /* главное, чтобы контент не вылезал */
+  transition: max-height 0.28s ease; /* плавно раскрывается */
+  will-change: max-height;
+}
+.acc__content {
+  padding: 12px 14px;
+}
+.acc__content p {
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+
+/* Эксклюзивы — нормальная типографика */
+.exclusive {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.exclusive__text p {
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+
+/* ТАБЛИЦА ЦЕН — железная колонка справа (оставь) */
+.u-price-table .u-col-price,
+.u-price-table td.u-col-price {
+  text-align: right !important;
+  padding-right: 16px;
+  font-variant-numeric: tabular-nums;
+  -moz-font-feature-settings: "tnum";
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+
+/* ==== Glow accent (фиолетово-бирюзовое свечение) ==== */
+:root {
+  --glow-a: rgba(167, 139, 250, 0.28); /* фиолетовый */
+  --glow-b: rgba(110, 231, 249, 0.2); /* бирюза */
+}
+
+/* общий миксин через before: размазанный градиент за карточкой */
+.u-glow {
+  position: relative;
+  isolation: isolate; /* чтобы свечение не «протекало» за границы блока */
+}
+.u-glow::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  background: radial-gradient(
+      120% 120% at 15% 10%,
+      var(--glow-a),
+      transparent 55%
+    ),
+    radial-gradient(120% 120% at 85% 20%, var(--glow-b), transparent 60%);
+  filter: blur(22px);
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0.9;
+}
+
+/* карточки-сетки с подсветкой */
+.info-card--glow {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(167, 139, 250, 0.28);
+  box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.22) inset,
+    0 14px 40px rgba(17, 24, 39, 0.35);
+}
+
+/* крупная панель «Эксклюзивы» с подсветкой */
+.exclusive--glow {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(167, 139, 250, 0.28);
+  box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.22) inset,
+    0 18px 48px rgba(17, 24, 39, 0.45);
+}
+/* ==== Hover animations like Sochi pitch ==== */
+
+/* базовые переходы и оптимизация */
+.info-card,
+.exclusive,
+.card,
+.chip {
+  transition: transform 0.18s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.18s cubic-bezier(0.22, 0.61, 0.36, 1),
+    background-color 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
+  will-change: transform, box-shadow;
+}
+
+/* лёгкое приподнятие */
+.info-card:hover,
+.exclusive:hover,
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* усиление теней на hover */
+.info-card:hover {
+  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.35);
+}
+.exclusive:hover {
+  box-shadow: 0 22px 56px rgba(17, 24, 39, 0.45);
+}
+.card:hover {
+  box-shadow: 0 20px 50px rgba(17, 24, 39, 0.45);
+}
+
+/* glow-интенсивность, если стоит u-glow */
+.u-glow::before {
+  transition: opacity 0.18s ease, filter 0.18s ease, transform 0.18s ease;
+}
+.u-glow:hover::before {
+  opacity: 1;
+  filter: blur(30px);
+  transform: translateY(-1px);
+}
+
+/* активные чипы тоже чуть подпрыгивают */
+.chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* Уважение к настройкам доступности */
+@media (prefers-reduced-motion: reduce) {
+  .info-card,
+  .exclusive,
+  .card,
+  .chip,
+  .u-glow::before {
+    transition: none !important;
+  }
+  .info-card:hover,
+  .exclusive:hover,
+  .card:hover,
+  .chip:hover,
+  .u-glow:hover::before {
+    transform: none !important;
+  }
+}
+/* раскладка шапки + переключатель темы справа */
+.board__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+  color: inherit;
+}
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+.theme-toggle__label {
+  font-size: 12px;
+  opacity: 0.85;
+}
+/* ===== Theme toggle & top bar layout ===== */
+/* раскладка: слева Header, справа кнопка темы */
+.board__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* кнопка переключения темы */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+  color: inherit;
+}
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+.theme-toggle__label {
+  font-size: 12px;
+  opacity: 0.85;
+}
